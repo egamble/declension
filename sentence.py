@@ -28,16 +28,18 @@ weak_nouns = {
 def decline_noun(noun, gender, case, number):
     """
     Returns the correctly declined form of a German noun
-    (handles weak masculine nouns and plural datives).
+    (handles weak masculine nouns and plural dative -n).
     """
-    # Plural dative adds -n if not already ending in -n/-s
-    if number == "plur" and case == "dat" and not noun.endswith(("n", "s")):
-        return noun + "n"
-
-    # Weak masculine nouns take -n in acc/dat singular
+    # Handle weak masculine nouns in singular (Acc/Dat)
     if gender == "masc" and number == "sing" and case in ("acc", "dat"):
         if noun in weak_nouns:
             return weak_nouns[noun]
+
+    # Handle plural dative nouns that require -n
+    # Rule: add -n unless plural form already ends in -n or -s
+    if number == "plur" and case == "dat":
+        if not noun.endswith(("n", "s")):
+            noun = noun + "n"
 
     return noun
 
