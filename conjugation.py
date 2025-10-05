@@ -5,26 +5,31 @@
 
 # English conjugation
 def conjugate_en(verb, subject):
+    subject = subject.capitalize()
+
+    # Irregular verb: "be"
+    if verb == "be":
+        if subject == "I":
+            return "am"
+        elif subject in ["He", "She", "It"]:
+            return "is"
+        else:
+            return "are"
+
+    # Irregular verb: "have"
+    if verb == "have":
+        return "has" if subject in ["He", "She", "It"] else "have"
+
+    # Regular verbs
     if subject in ["He", "She", "It"]:
         if verb.endswith("y") and verb[-2] not in "aeiou":
-            return verb[:-1] + "ies"
+            return verb[:-1] + "ies"  # cry -> cries
         elif verb.endswith(("s", "sh", "ch", "x", "z")):
-            return verb + "es"
-        elif verb == "be":
-            return "is"
-        elif verb == "have":
-            return "has"
+            return verb + "es"        # watch -> watches
         else:
-            return verb + "s"
-    elif subject == "I":
-        if verb == "be":
-            return "am"
+            return verb + "s"         # play -> plays
+    else:
         return verb
-    elif subject in ["You", "We", "They"]:
-        if verb == "be":
-            return "are"
-        return verb
-    return verb
 
 # German irregular verbs
 irregular_de = {
