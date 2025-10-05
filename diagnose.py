@@ -1,4 +1,8 @@
+
+# ------------------
 # diagnose.py
+# ------------------
+
 import re
 
 def normalize(s: str) -> str:

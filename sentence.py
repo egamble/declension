@@ -1,4 +1,8 @@
+
+# ------------------
 # sentence.py
+# ------------------
+
 import random
 from vocabulary import nouns, adjectives, verbs, subjects, dat_prepositions, acc_prepositions
 from articles import definite, indefinite, weak, strong, mixed, mixed_ending

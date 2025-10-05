@@ -1,4 +1,8 @@
+
+# ------------------
 # main.py
+# ------------------
+
 from sentence import generate_sentence
 from diagnose import diagnose
 

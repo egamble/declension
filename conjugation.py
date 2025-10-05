@@ -1,4 +1,7 @@
+
+# ------------------
 # conjugation.py
+# ------------------
 
 # English conjugation
 def conjugate_en(verb, subject):

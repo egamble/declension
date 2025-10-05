@@ -1,6 +1,11 @@
 # vocabulary.py
 
 # Subjects (EN, DE)
+
+# ------------------
+# vocabulary.py
+# ------------------
+
 subjects = [
     ("I", "ich"),
     ("you", "du"),
