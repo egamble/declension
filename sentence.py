@@ -4,7 +4,7 @@
 # ------------------
 
 import random
-from vocabulary import nouns, adjectives, verbs, subjects, dat_prepositions, acc_prepositions
+from vocabulary import nouns, adjectives, verbs, subjects, dat_prepositions, acc_prepositions, gen_prepositions
 from articles import definite, indefinite, weak, strong, mixed, mixed_ending
 from conjugation import conjugate_en, conjugate_de
 
@@ -28,15 +28,21 @@ weak_nouns = {
 def decline_noun(noun, gender, case, number):
     """
     Returns the correctly declined form of a German noun
-    (handles weak masculine nouns and plural dative -n).
+    (handles weak masculine nouns, plural datives, and genitive endings).
     """
-    # Handle weak masculine nouns in singular (Acc/Dat)
-    if gender == "masc" and number == "sing" and case in ("acc", "dat"):
+    # Weak masculine nouns in singular (Acc/Dat/Gen)
+    if gender == "masc" and number == "sing" and case in ("acc", "dat", "gen"):
         if noun in weak_nouns:
             return weak_nouns[noun]
 
-    # Handle plural dative nouns that require -n
-    # Rule: add -n unless plural form already ends in -n or -s
+    # Genitive singular masculine/neuter adds -s or -es
+    if number == "sing" and case == "gen" and gender in ("masc", "neut"):
+        if noun.endswith(("s", "ß", "x", "z", "tz", "sch")):
+            noun = noun + "es"
+        else:
+            noun = noun + "s"
+
+    # Plural dative nouns add -n if not ending in -n or -s
     if number == "plur" and case == "dat":
         if not noun.endswith(("n", "s")):
             noun = noun + "n"
@@ -61,21 +67,22 @@ def generate_sentence():
 
     # Select case
     if use_preposition:
-        if random.choice([True, False]):
+        prep_type = random.choice(["dat", "acc", "gen"])
+        if prep_type == "dat":
             prep_de, prep_en = random.choice(dat_prepositions)
             case = "dat"
-        else:
+        elif prep_type == "acc":
             prep_de, prep_en = random.choice(acc_prepositions)
             case = "acc"
-    else:
-        if verb_case == "nom":
-            case = "nom"
-        elif verb_case == "acc":
-            case = "acc"
         else:
-            # safety fallback
+            prep_de, prep_en = random.choice(gen_prepositions)
+            case = "gen"
+    else:
+        if verb_case in ("nom", "acc", "dat", "gen"):
+            case = verb_case
+        else:
             case = "nom"
-
+            
     noun_de = decline_noun(de_plur if plural else noun, gender, case, number)
     obj_en = en_plur if plural else en_sing
 

@@ -31,6 +31,7 @@ def conjugate_en(verb, subject):
     else:
         return verb
 
+
 # German irregular verbs
 irregular_de = {
     "sein": {
@@ -52,6 +53,18 @@ irregular_de = {
     "mögen": {
         "ich": "mag", "du": "magst", "er/sie/es": "mag",
         "wir": "mögen", "ihr": "mögt", "sie": "mögen"
+    },
+    "helfen": {
+        "ich": "helfe", "du": "hilfst", "er/sie/es": "hilft",
+        "wir": "helfen", "ihr": "helft", "sie": "helfen"
+    },
+    "gefallen": {
+        "ich": "gefallen", "du": "gefällst", "er/sie/es": "gefällt",
+        "wir": "gefallen", "ihr": "gefallt", "sie": "gefallen"
+    },
+    "bedürfen": {
+        "ich": "bedürfe", "du": "bedarfst", "er/sie/es": "bedarf",
+        "wir": "bedürfen", "ihr": "bedürft", "sie": "bedürfen"
     }
 }
 

@@ -38,7 +38,13 @@ def diagnose(user_in, correct, meta):
     if user_noun.lower()!=meta["noun_de"].lower():
         problems.append(f"Noun: expected '{meta['noun_de']}', got '{user_noun or '∅'}'")
 
-    case_names={"nom":"nominative","acc":"accusative","dat":"dative"}
+    case_names = {
+        "nom": "nominative",
+        "acc": "accusative",
+        "dat": "dative",
+        "gen": "genitive"
+    }
+
     problems.append(f"(This noun phrase is in the **{case_names[meta['case']]}** case.)")
     problems.append(f"(Declension type: **{meta['declension_type']}**).")
 
