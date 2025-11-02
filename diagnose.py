@@ -52,15 +52,19 @@ def diagnose(user_in: str, correct: str, meta: dict) -> str:
         "dat": "dative",
         "gen": "genitive"
     }
-    problems.append(f"(This noun phrase is in the **{case_names[meta['case']]}** case.)")
-    problems.append(f"(Declension type: **{meta['declension_type']}**).")
+    
+    case_info = f"(This noun phrase is in the **{case_names[meta['case']]}** case.)"
+    decl_info = f"(Declension type: **{meta['declension_type']}**)."
 
-    # Final evaluation
-    if len(problems) <= 2 and normalize(user_in).lower() == normalize(correct).lower():
-        return "✅ Correct!"
+    # ✅ Always show case + declension info, even if correct
+    if not problems and normalize(user_in).lower() == normalize(correct).lower():
+        return f"✅ Correct!\n{case_info}\n{decl_info}"
     else:
         feedback = ["❌ Not quite.", "Correct: " + correct]
         if problems:
             feedback.append("Details:")
             feedback.extend(" - " + p for p in problems)
+        # Add case + declension info at the end
+        feedback.append(case_info)
+        feedback.append(decl_info)
         return "\n".join(feedback)
