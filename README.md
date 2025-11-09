@@ -1,1 +1,1 @@
-Install uv, then run with `uv run main.py`.
+Install uv, then run with `uv src/run main.py`.

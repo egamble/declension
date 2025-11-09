@@ -1,4 +1,3 @@
-
 # ------------------
 # diagnose.py
 # ------------------
@@ -6,8 +5,39 @@
 import re
 
 def normalize(s: str) -> str:
-    """Normalize user input: trim, remove trailing period, collapse spaces."""
-    return re.sub(r"\s+", " ", s.strip().rstrip("."))
+    """Normalize user input:
+    - trim, remove trailing period, collapse spaces
+    - convert ae/oe/ue to ä/ö/ü (only when not part of real vowel sequence)
+    - convert sss to ß (ASCII replacement)
+    - preserve capitalization (Ae -> Ä, Ue -> Ü, Sss -> ß)
+    """
+    s = s.strip().rstrip(".")
+    s = re.sub(r"\s+", " ", s)
+
+    # Vowels to check for "not preceded by a vowel"
+    vowel_class = "aeiouyäöüAEIOUYÄÖÜ"
+
+    def repl_factory(replacement_lower):
+        """Preserve capitalization when replacing."""
+        def repl(match):
+            text = match.group(0)
+            # Uppercase if first letter is uppercase
+            if text[0].isupper():
+                return replacement_lower.upper()
+            return replacement_lower
+        return repl
+
+    # Replace ae/oe/ue → ä/ö/ü when NOT preceded by another vowel
+    s = re.sub(rf"(?<![{vowel_class}])ae", repl_factory("ä"), s, flags=re.IGNORECASE)
+    s = re.sub(rf"(?<![{vowel_class}])oe", repl_factory("ö"), s, flags=re.IGNORECASE)
+    s = re.sub(rf"(?<![{vowel_class}])ue", repl_factory("ü"), s, flags=re.IGNORECASE)
+
+    # Replace sss → ß (ASCII fallback for Eszett)
+    s = re.sub(r"sss", "ß", s)
+    s = re.sub(r"SSS", "ẞ", s)
+
+    return s
+
 
 def diagnose(user_in: str, correct: str, meta: dict) -> str:
     """
@@ -64,7 +94,6 @@ def diagnose(user_in: str, correct: str, meta: dict) -> str:
         if problems:
             feedback.append("Details:")
             feedback.extend(" - " + p for p in problems)
-        # Add case + declension info at the end
         feedback.append(case_info)
         feedback.append(decl_info)
         return "\n".join(feedback)
