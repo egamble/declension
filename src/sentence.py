@@ -82,6 +82,13 @@ def generate_sentence():
             case = verb_case
         else:
             case = "nom"
+
+    # ✅ Force an article when genitive is used
+    if case == "gen":
+        # Randomly choose definite or indefinite (but indefinite only makes sense in singular)
+        det_type = random.choice(["definite", "indefinite"])
+        if number == "plur":  # plural has no indefinite article
+            det_type = "definite"
             
     noun_de = decline_noun(de_plur if plural else noun, gender, case, number)
     obj_en = en_plur if plural else en_sing
