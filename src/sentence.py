@@ -67,13 +67,13 @@ def generate_sentence():
 
     # Select case
     if use_preposition:
-        prep_type = random.choice(["dat", "acc", "gen"])
-        if prep_type == "dat":
-            prep_de, prep_en = random.choice(dat_prepositions)
-            case = "dat"
-        elif prep_type == "acc":
+        prep_type = random.choice(["acc", "dat", "gen"])
+        if prep_type == "acc":
             prep_de, prep_en = random.choice(acc_prepositions)
             case = "acc"
+        elif prep_type == "dat":
+            prep_de, prep_en = random.choice(dat_prepositions)
+            case = "dat"
         else:
             prep_de, prep_en = random.choice(gen_prepositions)
             case = "gen"

@@ -52,17 +52,17 @@ adjectives = [
 
 # Verbs: (EN, DE, required case)
 verbs = [
+    # Nominative verbs
+    ("be", "sein", "nom"), # This is replicated to make nominative more likely.
+    ("be", "sein", "nom"),
+    ("be", "sein", "nom"),
+
     # Accusative verbs
     ("see", "sehen", "acc"),
     ("have", "haben", "acc"),
     ("like", "mögen", "acc"),
     ("buy", "kaufen", "acc"),
     ("eat", "essen", "acc"),
-
-    # Nominative verbs
-    ("be", "sein", "nom"), # This is replicated to make nominative more likely.
-    ("be", "sein", "nom"),
-    ("be", "sein", "nom"),
 
     # Dative verbs
     ("help", "helfen", "dat"),
@@ -75,6 +75,16 @@ verbs = [
     ("need", "bedürfen", "gen"),
 ]
 
+# Accusative prepositions: (DE, EN)
+acc_prepositions = [
+    ("für", "for"),
+    ("durch", "through"),
+    ("gegen", "against"),
+    ("ohne", "without"),
+    ("um", "around"),
+    ("entlang", "along")
+]
+
 # Dative prepositions: (DE, EN)
 dat_prepositions = [
     ("mit", "with"),
@@ -84,16 +94,6 @@ dat_prepositions = [
     ("zu", "to"),
     ("aus", "out of"),
     ("seit", "since/for")
-]
-
-# Accusative prepositions: (DE, EN)
-acc_prepositions = [
-    ("für", "for"),
-    ("durch", "through"),
-    ("gegen", "against"),
-    ("ohne", "without"),
-    ("um", "around"),
-    ("entlang", "along")
 ]
 
 # Genitive prepositions: (DE, EN)
